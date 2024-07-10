@@ -50,7 +50,7 @@
     </CodeEntry>
   </CheatCodes>
   <UserdefinedSymbols/>
-  <LuaScript>TrainerOrigin = "C:\\Users\\dnknd\\OneDrive\\Documentos\\MyCheatTables\\Wall Hack"
+  <LuaScript>TrainerOrigin = "C:\\Wall Hack"
 
 local function ignore_set(str, set)
     if set then str = str:gsub("["..set.."]", "") end
