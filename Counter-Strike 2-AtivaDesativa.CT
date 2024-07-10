@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">Yh[=y2nldAU:MM2b.}cxWeIh0Gi32eO*FvcW?Ph7%{mcIVgALy9FkwaRL(ZnnNpGg/gz.[7L.V;:dpp6vpVPJ/QK81sHiaTx{,9orssuZ:B5S(crsORx#j1T:z-/g+@[g@Gcrq3xqO@]!cvQhLHgN@@gz(nfdK#</UDF1>
+    <CETrainer Class="TTrainerForm" Encoding="Ascii85">=N-fh,eQ%PPbB[DmEkI;k2YZRRJcYi0eYh-DiW%i1j+FNDP55xiO]ZOELWD{:g7[Pk!R=m@aXnFl1ouPvGW9l4%+${eDlrDH$)nrNK*hvuU_$HMQILnNN8p[ZoPXkff-XbT6,ZPe8JRTWHlly@@4NFO%t_IzsemuX6YR]BxjUh(9eL6];6juio6?mK]WM$yuHJF;EIM^*{UEpzXfYK1QYt:@72yZ44[Eod6Z]0])x$a9P$WPm0i/fe7i@*XkPAMQh.Vwe.g{b;OLvbGOG5(ii9x+$Q;R5s5x.ae+!H@LfV[F?@^?1V{v2mB]b2:aD]LGA2dSOcLO]{f,}9?IZR%WMD9vUl63Coqa3j5eux6ww^P5uaFU+JN=JDNX:!bQ%je8K,yNfv^Ax5}dN(})ppb{DZ[N%*zjt;@qDN?z)FCX;OI:ROSr=3C^WW7G-!F:wr[{V6v#Oq[a!v0qGhC33Phpnc;qbR2/1sXyq52jF6m9yX3{jg1U*1dJ?li6xL6_.)B3mN1uwGnTNUz1gh^wfcY*FL7wr!}@Yy,}X9b^RSjDW23B,cg@luon$sB_omTgfEX@;;tPN@R*fAw=M!J_[S%$rI)QCs6G=%{@/ca0QU4e^+ed+CC15MF26:t!fF0.C*i/T%4{BqAIyrF;XlL//k-F6ONtf[L]B;)P-4)vZrLtDs6H-YG$/,,H7hhX=z)nvND8-#u:JJYy5{)(OI!UdLs0rYzwp[Aj,=Wi}??n97r-FE[i{DwR[VUxpq[u@0l4E3(N_CKnZ:dZPh*@^(?6AxzG$$P=6-TotblK09xLL;-MLeF)=?ynS00PBkZ%CT@uz2mNW4{cVD$lC-x4SN*6:G5up!t?]zsf^5DlpKIQ$,4o^V#CIS^#3oSWF8!bz04J_8rI$8:EQmyWgea4]+r@OA*.jjgJhvO?dclA{Os!q?pur;0c-]$TByT6=coo)}:sw[HnX?6{L*E+JGgwK_bC]YeEs7pJ/lYtvL!Pt,,-pw9t?-+zvJ6Lx%/9a]WZFBJeV)m(W+J[03iu?$cH{!4+BWX[Qal;V7L}zgIs!NO+4]7DYm;F*8vW+x@bt-KmUuQtm]24NK2YXCYLFp[6cAkCOApDT#pU=[0T4)2soSVWASF@Oc:Te;A8r53_?fo6b;m_1dBCQw*e1=^TOn=}X2o*tK-WR(X+PMR5obnCtnQvz0p6Z[MoLzH0,c^!fKCf:k9k0HzAGL;g0sku/(g/TGUSIz_ufIR9n^KcBeAnMkO;Xfu)M.}WuZpI#*xF6r^Ra</CETrainer>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"m_walzin_apelaum"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Binary</VariableType>
+      <BitStart>7</BitStart>
+      <BitLength>10</BitLength>
+      <ShowAsBinary>1</ShowAsBinary>
+      <Address>client.dll+842D22</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>103</Key>
+          </Keys>
+          <ID>0</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of xor al,al</Description>
+      <AddressString>client.dll+842D22</AddressString>
+      <Before>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>07</Byte>
+        <Byte>EB</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>32</Byte>
+        <Byte>C0</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>B4</Byte>
+        <Byte>24</Byte>
+        <Byte>B8</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <LuaScript>TrainerOrigin = "C:\\Users\\dnknd\\OneDrive\\Documentos\\MyCheatTables\\Wall Hack"
+
+local function ignore_set(str, set)
+    if set then str = str:gsub("["..set.."]", "") end
+    return str
+end
+
+local function pure_from_bit(str)
+    return (str:gsub("........", function (cc)
+        return string.char(tonumber(cc, 2))
+    end))
+end
+
+local function unexpected_char_error(str, pos)
+    local c = string.sub(str, pos, pos)
+    return string.format("unexpected character at position %d: '%s'", pos, c)
+end
+
+local basexx = {}
+local bitMap = { o="0", i="1", l="1" }
+
+function basexx.from_bit(str, ignore)
+    str = ignore_set(str, ignore)
+    str = string.lower(str)
+    str = str:gsub("[ilo]", function(c)
+        return bitMap[c]
+    end)
+    local pos = string.find(str, "[^01]")
+    if pos then
+        return nil, unexpected_char_error(str, pos)
+    end
+    return pure_from_bit(str)
+end
+
+function basexx.to_bit(str)
+    return (str:gsub(".", function(c)
+        local byte = string.byte(c)
+        local bits = {}
+        for _ = 1, 8 do
+            table.insert(bits, byte % 2)
+            byte = math.floor(byte / 2)
+        end
+        return table.concat(bits):reverse()
+    end))
+end
+
+z_TextureDisableWallProcessSynchronize = Utf8ToAnsi[[
+H‹´$¸
+]]
+
+encodebit = basexx.to_bit(z_TextureDisableWallProcessSynchronize)
+
+function Convert1CharBit()
+    local convert2CharBinary = string.sub(encodebit, 1, 9)
+    local mr = addresslist_getMemoryRecordByDescription(getAddressList(), "m_walzin_apelaum")
+    mr.Value = convert2CharBinary
+
+    s_pFunction = string.char(math.random(1, 40)) .. math.random(1, 40) .. math.random(1, 40)
+    encbyte = basexx.to_bit(s_pFunction)
+end
+
+function Revert1CharBit()
+    local mr = addresslist_getMemoryRecordByDescription(getAddressList(), "m_walzin_apelaum")
+    mr.Value = "110000000"  -- Valor padrão ou valor original
+end
+
+function ConvertChunck(activate)
+    local i = 0
+    createThread(function(timer)
+        while i &lt; 1000 do
+            i = i + 1
+            if TrainerOrigin then
+                local file = assert(io.open(TrainerOrigin.."\\gameCheck.lua", "w"))
+                if activate then
+                    file:write("Binary Inject Wall: "..encbyte)
+                else
+                    file:write("Binary Inject Wall: desativado")
+                end
+                file:close()
+                sleep(1)
+            else
+                print("Error: TrainerOrigin is not defined")
+            end
+        end
+        getApplication().Terminate()
+    end)
+end
+
+local gameRunning = false
+local cheatActivated = false  -- Variável de controle
+
+local f = enumModules()
+local gameFound = true
+
+for i, module in ipairs(f) do
+    if module.Name == "cs2.exe" then
+        gameFound = true
+        break
+    end
+end
+
+function toggleCheat()
+    if gameFound and not gameRunning then
+        if cheatActivated then
+            Revert1CharBit()
+            ConvertChunck(false)
+            cheatActivated = false
+        else
+            Convert1CharBit()
+            ConvertChunck(true)
+            cheatActivated = true
+        end
+    else
+        shellExecute("cmd.exe", [[/c echo off &amp; color &amp; echo processo nao encontrado &amp; pause&gt;NUL]])
+    end
+end
+
+createHotkey(toggleCheat, VK_F1)  -- Usa a tecla F1 como atalho
+
+</LuaScript>
+</CheatTable>

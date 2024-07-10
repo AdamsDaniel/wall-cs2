@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <Forms>
+    <UDF1 Class="TCEForm" Encoding="Ascii85">Yh[=y2nldAU:MM2b.}cxWeIh0Gi32eO*FvcW?Ph7%{mcIVgALy9FkwaRL(ZnnNpGg/gz.[7L.V;:dpp6vpVPJ/QK81sHiaTx{,9orssuZ:B5S(crsORx#j1T:z-/g+@[g@Gcrq3xqO@]!cvQhLHgN@@gz(nfdK#</UDF1>
+  </Forms>
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"m_walzin_apelaum"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Binary</VariableType>
+      <BitStart>7</BitStart>
+      <BitLength>10</BitLength>
+      <ShowAsBinary>1</ShowAsBinary>
+      <Address>client.dll+842D22</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Change of xor al,al</Description>
+      <AddressString>client.dll+842D22</AddressString>
+      <Before>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>07</Byte>
+        <Byte>EB</Byte>
+        <Byte>02</Byte>
+      </Before>
+      <Actual>
+        <Byte>32</Byte>
+        <Byte>C0</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>B4</Byte>
+        <Byte>24</Byte>
+        <Byte>B8</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <LuaScript>TrainerOrigin = "C:\\Users\\dnknd\\OneDrive\\Documentos\\MyCheatTables\\Wall Hack"
+
+local function ignore_set(str, set)
+    if set then str = str:gsub("["..set.."]", "") end
+    return str
+end
+
+local function pure_from_bit(str)
+    return (str:gsub("........", function (cc)
+        return string.char(tonumber(cc, 2))
+    end))
+end
+
+local function unexpected_char_error(str, pos)
+    local c = string.sub(str, pos, pos)
+    return string.format("unexpected character at position %d: '%s'", pos, c)
+end
+
+local basexx = {}
+local bitMap = { o="0", i="1", l="1" }
+
+function basexx.from_bit(str, ignore)
+    str = ignore_set(str, ignore)
+    str = string.lower(str)
+    str = str:gsub("[ilo]", function(c)
+        return bitMap[c]
+    end)
+    local pos = string.find(str, "[^01]")
+    if pos then
+        return nil, unexpected_char_error(str, pos)
+    end
+    return pure_from_bit(str)
+end
+
+function basexx.to_bit(str)
+    return (str:gsub(".", function(c)
+        local byte = string.byte(c)
+        local bits = {}
+        for _ = 1, 8 do
+            table.insert(bits, byte % 2)
+            byte = math.floor(byte / 2)
+        end
+        return table.concat(bits):reverse()
+    end))
+end
+
+z_TextureDisableWallProcessSynchronize = Utf8ToAnsi[[
+H‹´$¸
+]]
+
+encodebit = basexx.to_bit(z_TextureDisableWallProcessSynchronize)
+
+function Convert1CharBit()
+    local convert2CharBinary = string.sub(encodebit, 1, 9)
+    local mr = addresslist_getMemoryRecordByDescription(getAddressList(), "m_walzin_apelaum")
+    mr.Value = convert2CharBinary
+
+    s_pFunction = string.char(math.random(1, 40)) .. math.random(1, 40) .. math.random(1, 40)
+    encbyte = basexx.to_bit(s_pFunction)
+end
+
+function ConvertChunck()
+    local i = 0
+    createThread(function(timer)
+        while i &lt; 1000 do
+            i = i + 1
+            if TrainerOrigin then
+                local file = assert(io.open(TrainerOrigin.."\\gameCheck.lua", "w"))
+                file:write("Binary Inject Wall: "..encbyte)
+                file:close()
+                sleep(1)
+            else
+                print("Error: TrainerOrigin is not defined")
+            end
+        end
+        getApplication().Terminate() -- Mova a chamada de Terminate para fora do loop while
+    end)
+end
+
+local gameRunning = false
+
+local f = enumModules()
+local gameFound = true
+
+for i, module in ipairs(f) do
+    if module.Name == "cs2.exe" then
+        gameFound = true
+        break
+    end
+end
+
+if gameFound and not gameRunning then
+    Convert1CharBit() -- Chama a função para garantir que encbyte está definido
+    ConvertChunck()
+else
+    shellExecute("cmd.exe", [[/c echo off &amp; color &amp; echo processo nao encontrado &amp; pause&gt;NUL]])
+end
+
+</LuaScript>
+</CheatTable>
